@@ -23,20 +23,53 @@ class DbService {
         return instance ? instance : new DbService();
     }
 
-    // async isCodeExist(code) {
-    //     try {
-    //         const response = await new Promise((resolve, reject) => {
-    //             const query = "SELECT * FROM devices WHERE code = ?";
-    //             connection.query(query, [code], (err, result) => {
-    //                 if (err) reject(new Error(err.message));
-    //                 resolve(result);
-    //             });
-    //         });
-    //         console.log(response.length);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
+    async gethealthDataUser(usr_name) {
+        console.log(usr_name);
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM healthInfo where username = ?";
+                connection.query(query, [usr_name], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            if (response.length > 0) {
+                return response;
+            } else {
+                return { message: "no data found" };
+            }
+        } catch (error) {
+            console.log(error);
+            return { message: "error occur" };
+        }
+    }
+
+    async addhealdata(info) {
+        console.log(info);
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query =
+                    "INSERT INTO healthInfo (name, blood_pressure, blood_oxygen, heartbeat, fall_detection) VALUES(?,?,?,?,?);";
+                connection.query(
+                    query,
+                    [info.usr_name, info.bp, info.bo, info.hb, info.fall],
+                    (err, result) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(result);
+                    }
+                );
+            });
+            console.log(response);
+            if (response.affectedRows != undefined && response.affectedRows > 0) {
+                return { message: "row added" };
+            } else {
+                return { message: "error occur" };
+            }
+        } catch (error) {
+            console.log(error);
+            return { message: "error occur" };
+        }
+    }
 
     async getAlldata() {
         try {
