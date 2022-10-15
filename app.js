@@ -15,8 +15,11 @@ app.use(express.urlencoded({ extended: false }));
 
 //login
 app.get("/login", (request, response) => {
-    const info = ({ usr_name, pwd } = request.body);
+    //const info = ({ usr_name, pwd } = request.body);
     //console.log(info);
+    const usr_name = request.query.usr_name;
+    const pwd = request.query.pwd;
+    const info = { usr_name, pwd };
     const db = DbService.getDbServiceInstance();
     const result = db.Login(info);
     result.then((data) => response.json({ data: data })).catch((err) => console.log(error));
