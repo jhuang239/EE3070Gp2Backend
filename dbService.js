@@ -34,6 +34,7 @@ class DbService {
                 });
             });
             if (response.length > 0) {
+                console.log(response);
                 return response;
             } else {
                 return { message: "no data found" };
@@ -97,8 +98,9 @@ class DbService {
                     resolve(result);
                 });
             });
-            console.log(response.length);
-            if (response.length > 0) {
+            console.log(response[0].code);
+            //console.log(response.length);
+            if (response[0].code == device_code) {
                 try {
                     const createDate = new Date();
                     const response1 = await new Promise((resolve, reject) => {
@@ -114,10 +116,10 @@ class DbService {
                         );
                     });
                     console.log(response1);
-                    return { message: "Account Created!!" };
+                    return { success: true, message: "Account Created!!" };
                 } catch (error) {
                     console.log(error);
-                    return { message: "Error occur please try again!!" };
+                    return { success: false, message: "Error occur please try again!!" };
                 }
             } else {
                 return { message: "Device code not exist!!" };
@@ -125,6 +127,38 @@ class DbService {
         } catch (error) {
             console.log(error);
             return { message: "Error occur please try again!!" };
+        }
+    }
+
+    async Login(info) {
+        console.log(info);
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM user WHERE username = ?";
+                connection.query(query, [info.usr_name, info.pwd], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                });
+            });
+            console.log(response);
+            console.log(response[0].username);
+            if (response[0].username == info.usr_name && response[0].password == info.pwd) {
+                const date = new Date();
+                const response1 = await new Promise((resolve, reject) => {
+                    const query = "INSERT INTO LoginRecord (usrname, active, time) VALUES(?,?,?);";
+                    connection.query(query, [info.usr_name, 1, date], (err, results) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(results);
+                    });
+                });
+                //console.log(response1.affectedRows);
+                return { success: true, message: "successfully login" };
+            } else {
+                return { success: false, message: "wrong account or password" };
+            }
+        } catch (error) {
+            console.log(error);
+            return { success: false, message: "Error occur please try again!!" };
         }
     }
 }
