@@ -144,9 +144,11 @@ class DbService {
             console.log(response[0].username);
             if (response[0].username == info.usr_name && response[0].password == info.pwd) {
                 const date = new Date();
+                const code = response[0].device_Code;
                 const response1 = await new Promise((resolve, reject) => {
-                    const query = "INSERT INTO LoginRecord (usrname, active, time) VALUES(?,?,?);";
-                    connection.query(query, [info.usr_name, 1, date], (err, results) => {
+                    const query =
+                        "INSERT INTO LoginRecord (usrname, active, code, time) VALUES(?,?,?,?);";
+                    connection.query(query, [info.usr_name, 1, code, date], (err, results) => {
                         if (err) reject(new Error(err.message));
                         resolve(results);
                     });
@@ -155,6 +157,26 @@ class DbService {
                 return { success: true, message: "successfully login" };
             } else {
                 return { success: false, message: "wrong account or password" };
+            }
+        } catch (error) {
+            console.log(error);
+            return { success: false, message: "Error occur please try again!!" };
+        }
+    }
+
+    async getLoginByCode(code) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM LoginRecord WHERE code = ? ORDER BY time DESC LIMIT 1";
+                connection.query(query, [code], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                });
+            });
+            if (response[0].active == 1) {
+                return { success: true, username: response[0].usrname };
+            } else {
+                return { success: false, message: "no latest active login activity" };
             }
         } catch (error) {
             console.log(error);
