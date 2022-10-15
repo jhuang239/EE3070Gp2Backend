@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
+const port = 3000;
 
 const DbService = require("./dbService");
 const { response } = require("express");
@@ -63,4 +64,4 @@ app.get("/getHealthDataByUser", (request, response) => {
 
 //delete
 
-app.listen(process.env.PORT, () => console.log("app os running"));
+app.listen(process.env.PORT || port, () => console.log("app os running"));
