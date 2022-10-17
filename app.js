@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 //app.get("/", (req, res) => res.send("Testing"));
 
 //update login record
-app.post("/updateLoginRecordByCode", (request, response) => {
+app.post("/updateLoginRecord", (request, response) => {
     //console.log(request.body);
     const info = ({ usrname, code } = request.body);
     const db = DbService.getDbServiceInstance();
