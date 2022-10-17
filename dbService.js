@@ -86,13 +86,13 @@ class DbService {
             });
             console.log(response);
             if (response.affectedRows != undefined && response.affectedRows > 0) {
-                return { message: "row added" };
+                return { success: true, message: "row added" };
             } else {
-                return { message: "error occur" };
+                return { success: false, message: "cannot insert" };
             }
         } catch (error) {
             console.log(error);
-            return { message: "error occur" };
+            return { success: false, message: "error occur" };
         }
     }
 
