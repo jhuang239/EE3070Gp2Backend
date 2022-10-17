@@ -33,7 +33,7 @@ app.get("/getLoginByCode", (request, response) => {
 
 //login
 app.get("/login", (request, response) => {
-    const info = ({ usr_name, pwd } = request.body);
+    const info = ({ username, pwd } = request.body);
     console.log(info);
     // const usr_name = request.query.usr_name;
     // const pwd = request.query.pwd;
@@ -46,11 +46,11 @@ app.get("/login", (request, response) => {
 
 //create
 app.post("/insert", (request, response) => {
-    const { usr_name, pwd, device_code } = request.body;
-    console.log(usr_name, pwd, device_code);
+    const { username, pwd, device_code } = request.body;
+    console.log(username, pwd, device_code);
     const db = DbService.getDbServiceInstance();
 
-    const result = db.createAccount(usr_name, pwd, device_code);
+    const result = db.createAccount(username, pwd, device_code);
     result;
     result.then((data) => response.json(data)).catch((err) => console.log(err));
     //const {usr_name, pwd, device_code} = request.body;
@@ -67,7 +67,7 @@ app.get("/getAll", (request, response) => {
 //insert health data
 app.post("/addHealthData", (request, response) => {
     //console.log(request.body);
-    const info = ({ usr_name, bp, bo, hb, fall } = request.body);
+    const info = ({ username, bp, bo, hb, fall } = request.body);
     //console.log(info);
     const db = DbService.getDbServiceInstance();
     const result = db.addhealdata(info);
@@ -76,10 +76,10 @@ app.post("/addHealthData", (request, response) => {
 
 //get health data by username
 app.get("/getHealthDataByUser", (request, response) => {
-    const { usr_name } = request.body;
-    console.log(usr_name);
+    const { username } = request.body;
+    console.log(username);
     const db = DbService.getDbServiceInstance();
-    const result = db.gethealthDataUser(usr_name);
+    const result = db.gethealthDataUser(username);
     result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
 

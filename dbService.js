@@ -23,12 +23,12 @@ class DbService {
         return instance ? instance : new DbService();
     }
 
-    async gethealthDataUser(usr_name) {
-        console.log(usr_name);
+    async gethealthDataUser(username) {
+        console.log(username);
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM healthInfo where username = ?";
-                connection.query(query, [usr_name], (err, result) => {
+                connection.query(query, [username], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);
                 });
@@ -53,7 +53,7 @@ class DbService {
                     "INSERT INTO healthInfo (name, blood_pressure, blood_oxygen, heartbeat, fall_detection) VALUES(?,?,?,?,?);";
                 connection.query(
                     query,
-                    [info.usr_name, info.bp, info.bo, info.hb, info.fall],
+                    [info.username, info.bp, info.bo, info.hb, info.fall],
                     (err, result) => {
                         if (err) reject(new Error(err.message));
                         resolve(result);
@@ -89,7 +89,7 @@ class DbService {
         }
     }
 
-    async createAccount(usr_name, pwd, device_code) {
+    async createAccount(username, pwd, device_code) {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM devices WHERE code = ?";
@@ -108,7 +108,7 @@ class DbService {
                             "INSERT INTO user (username, password, device_Code, created_time) VALUES(?,?,?,?);";
                         connection.query(
                             query,
-                            [usr_name, pwd, device_code, createDate],
+                            [username, pwd, device_code, createDate],
                             (err, result) => {
                                 if (err) reject(new Error(err.message));
                                 resolve(result);
@@ -135,20 +135,20 @@ class DbService {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM user WHERE username = ?";
-                connection.query(query, [info.usr_name, info.pwd], (err, results) => {
+                connection.query(query, [info.username, info.pwd], (err, results) => {
                     if (err) reject(new Error(err.message));
                     resolve(results);
                 });
             });
             console.log(response);
             console.log(response[0].username);
-            if (response[0].username == info.usr_name && response[0].password == info.pwd) {
+            if (response[0].username == info.username && response[0].password == info.pwd) {
                 const date = new Date();
                 const code = response[0].device_Code;
                 const response1 = await new Promise((resolve, reject) => {
                     const query =
                         "INSERT INTO LoginRecord (username, active, code, time) VALUES(?,?,?,?);";
-                    connection.query(query, [info.usr_name, 1, code, date], (err, results) => {
+                    connection.query(query, [info.username, 1, code, date], (err, results) => {
                         if (err) reject(new Error(err.message));
                         resolve(results);
                     });
