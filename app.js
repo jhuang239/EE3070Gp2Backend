@@ -19,7 +19,7 @@ app.get("/getLoginByCode", (request, response) => {
     console.log(code);
     const db = DbService.getDbServiceInstance();
     const result = db.getLoginByCode(code);
-    result.then((data) => response.json({ data: data })).catch((err) => console.log(error));
+    result.then((data) => response.json(data)).catch((err) => console.log(error));
 });
 
 //login
@@ -32,7 +32,7 @@ app.get("/login", (request, response) => {
 
     const db = DbService.getDbServiceInstance();
     const result = db.Login(info);
-    result.then((data) => response.json({ data: data })).catch((err) => console.log(error));
+    result.then((data) => response.json(data)).catch((err) => console.log(error));
 });
 
 //create
@@ -43,7 +43,7 @@ app.post("/insert", (request, response) => {
 
     const result = db.createAccount(usr_name, pwd, device_code);
     result;
-    result.then((data) => response.json({ data: data })).catch((err) => console.log(err));
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
     //const {usr_name, pwd, device_code} = request.body;
 });
 
@@ -52,7 +52,7 @@ app.get("/getAll", (request, response) => {
     const db = DbService.getDbServiceInstance();
 
     const result = db.getAlldata();
-    result.then((data) => response.json({ data: data })).catch((err) => console.log(err));
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
 
 //insert health data
@@ -62,7 +62,7 @@ app.post("/addHealthData", (request, response) => {
     //console.log(info);
     const db = DbService.getDbServiceInstance();
     const result = db.addhealdata(info);
-    result.then((data) => response.json({ data: data })).catch((err) => console.log(err));
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
 
 //get health data by username
@@ -71,7 +71,7 @@ app.get("/getHealthDataByUser", (request, response) => {
     console.log(usr_name);
     const db = DbService.getDbServiceInstance();
     const result = db.gethealthDataUser(usr_name);
-    result.then((data) => response.json({ data: data })).catch((err) => console.log(err));
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
 
 // app.get("/getcode", (request, response) => {
