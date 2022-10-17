@@ -164,6 +164,8 @@ class DbService {
         }
     }
 
+    async updateLoginRecordByCode(code) {}
+
     async getLoginByCode(code) {
         try {
             const response = await new Promise((resolve, reject) => {

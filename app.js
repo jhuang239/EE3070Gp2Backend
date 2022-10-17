@@ -13,6 +13,11 @@ app.use(express.urlencoded({ extended: false }));
 
 //app.get("/", (req, res) => res.send("Testing"));
 
+//update login record
+app.post("/updateLoginRecordByCode", (request, response) => {
+    console.log(request.body);
+});
+
 //get login record by device code
 app.get("/getLoginByCode", (request, response) => {
     const code = request.query.code;
