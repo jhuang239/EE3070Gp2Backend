@@ -74,10 +74,10 @@ class DbService {
             const date = new Date();
             const response = await new Promise((resolve, reject) => {
                 const query =
-                    "INSERT INTO healthInfo (username, blood_pressure, blood_oxygen, heartbeat, fall_detection, created_time) VALUES(?,?,?,?,?,?);";
+                    "INSERT INTO healthInfo (username, blood_pressure, blood_oxygen, heartbeat, created_time) VALUES(?,?,?,?,?);";
                 connection.query(
                     query,
-                    [info.username, info.bp, info.bo, info.hb, info.fall, date],
+                    [info.username, info.bp, info.bo, info.hb, date],
                     (err, result) => {
                         if (err) reject(new Error(err.message));
                         resolve(result);

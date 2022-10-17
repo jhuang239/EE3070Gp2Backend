@@ -67,7 +67,7 @@ app.get("/getAll", (request, response) => {
 //insert health data
 app.post("/addHealthData", (request, response) => {
     //console.log(request.body);
-    const info = ({ username, bp, bo, hb, fall } = request.body);
+    const info = ({ username, bp, bo, hb } = request.body);
     //console.log(info);
     const db = DbService.getDbServiceInstance();
     const result = db.addhealdata(info);
