@@ -164,7 +164,22 @@ class DbService {
         }
     }
 
-    async updateLoginRecordByCode(code) {}
+    async updateLoginRecord(info) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "UPDATE LoginRecord SET active = 0 WHERE username = ? AND code = ?";
+                connection.query(query, [info.usrname, info.code], (err, result) => {
+                    if (err) reject(new Error(error.message));
+                    resolve(result);
+                });
+            });
+            //console.log(response);
+            return { success: true, message: "data updated!!" };
+        } catch (error) {
+            console.log(error);
+            return { success: false, message: "Error occur please try again!!" };
+        }
+    }
 
     async getLoginByCode(code) {
         try {

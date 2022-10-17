@@ -15,7 +15,11 @@ app.use(express.urlencoded({ extended: false }));
 
 //update login record
 app.post("/updateLoginRecordByCode", (request, response) => {
-    console.log(request.body);
+    //console.log(request.body);
+    const info = ({ usrname, code } = request.body);
+    const db = DbService.getDbServiceInstance();
+    const result = db.updateLoginRecord(info);
+    result.then((data) => response.json(data)).catch((err) => console.log(error));
 });
 
 //get login record by device code
