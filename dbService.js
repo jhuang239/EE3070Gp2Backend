@@ -147,7 +147,7 @@ class DbService {
                 const code = response[0].device_Code;
                 const response1 = await new Promise((resolve, reject) => {
                     const query =
-                        "INSERT INTO LoginRecord (usrname, active, code, time) VALUES(?,?,?,?);";
+                        "INSERT INTO LoginRecord (username, active, code, time) VALUES(?,?,?,?);";
                     connection.query(query, [info.usr_name, 1, code, date], (err, results) => {
                         if (err) reject(new Error(err.message));
                         resolve(results);
@@ -168,7 +168,7 @@ class DbService {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "UPDATE LoginRecord SET active = 0 WHERE username = ? AND code = ?";
-                connection.query(query, [info.usrname, info.code], (err, result) => {
+                connection.query(query, [info.username, info.code], (err, result) => {
                     if (err) reject(new Error(error.message));
                     resolve(result);
                 });
@@ -191,7 +191,7 @@ class DbService {
                 });
             });
             if (response[0].active == 1) {
-                return { success: true, username: response[0].usrname };
+                return { success: true, username: response[0].username };
             } else {
                 return { success: false, message: "no latest active login activity" };
             }
