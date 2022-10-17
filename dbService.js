@@ -45,15 +45,39 @@ class DbService {
         }
     }
 
-    async addhealdata(info) {
-        console.log(info);
+    async getLatestHealtData(username) {
+        console.log(username);
         try {
             const response = await new Promise((resolve, reject) => {
                 const query =
-                    "INSERT INTO healthInfo (name, blood_pressure, blood_oxygen, heartbeat, fall_detection) VALUES(?,?,?,?,?);";
+                    "SELECT * FROM healthInfo where username = ? ORDER BY created_time DESC LIMIT 1";
+                connection.query(query, [username], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            if (response.length > 0) {
+                console.log(response);
+                return response[0];
+            } else {
+                return { message: "no data found" };
+            }
+        } catch (error) {
+            console.log(error);
+            return { message: "error occur" };
+        }
+    }
+
+    async addhealdata(info) {
+        console.log(info);
+        try {
+            const date = new Date();
+            const response = await new Promise((resolve, reject) => {
+                const query =
+                    "INSERT INTO healthInfo (username, blood_pressure, blood_oxygen, heartbeat, fall_detection, created_time) VALUES(?,?,?,?,?,?);";
                 connection.query(
                     query,
-                    [info.username, info.bp, info.bo, info.hb, info.fall],
+                    [info.username, info.bp, info.bo, info.hb, info.fall, date],
                     (err, result) => {
                         if (err) reject(new Error(err.message));
                         resolve(result);

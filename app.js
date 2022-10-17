@@ -83,6 +83,15 @@ app.get("/getHealthDataByUser", (request, response) => {
     result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
 
+//get latest health data by username
+app.get("/getLatestDataByUser", (request, response) => {
+    console.log(request.body);
+    const { username } = request.body;
+    const db = DbService.getDbServiceInstance();
+    const result = db.getLatestHealtData(username);
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
+});
+
 // app.get("/getcode", (request, response) => {
 //     const db = DbService.getDbServiceInstance();
 //     const { code } = request.body;
