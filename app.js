@@ -14,13 +14,13 @@ app.use(express.urlencoded({ extended: false }));
 //app.get("/", (req, res) => res.send("Testing"));
 
 //update login record
-app.post("/updateLoginRecord", (request, response) => {
-    //console.log(request.body);
-    const info = ({ username, code } = request.body);
-    const db = DbService.getDbServiceInstance();
-    const result = db.updateLoginRecord(info);
-    result.then((data) => response.json(data)).catch((err) => console.log(error));
-});
+// app.post("/updateLoginRecord", (request, response) => {
+//     //console.log(request.body);
+//     const info = ({ username, code } = request.body);
+//     const db = DbService.getDbServiceInstance();
+//     const result = db.updateLoginRecord(info);
+//     result.then((data) => response.json(data)).catch((err) => console.log(error));
+// });
 
 //get login record by device code
 app.get("/getLoginByCode", (request, response) => {

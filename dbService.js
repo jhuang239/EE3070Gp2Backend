@@ -172,46 +172,50 @@ class DbService {
                     resolve(results);
                 });
             });
-            console.log(response);
-            console.log(response[0].username);
             if (response[0].username == info.username && response[0].password == info.pwd) {
-                const date = new Date();
-                const code = response[0].device_Code;
-                const response1 = await new Promise((resolve, reject) => {
-                    const query =
-                        "INSERT INTO LoginRecord (username, active, code, time) VALUES(?,?,?,?);";
-                    connection.query(query, [info.username, 1, code, date], (err, results) => {
-                        if (err) reject(new Error(err.message));
-                        resolve(results);
-                    });
-                });
-                //console.log(response1.affectedRows);
-                return { success: true, message: "successfully login" };
+                return { success: true, message: "login success" };
             } else {
-                return { success: false, message: "wrong account or password" };
+                return { success: false, message: "wrong account name or password" };
             }
+            // console.log(response[0].username);
+            // if (response[0].username == info.username && response[0].password == info.pwd) {
+            //     const date = new Date();
+            //     const code = response[0].device_Code;
+            //     const response1 = await new Promise((resolve, reject) => {
+            //         const query =
+            //             "INSERT INTO LoginRecord (username, active, code, time) VALUES(?,?,?,?);";
+            //         connection.query(query, [info.username, 1, code, date], (err, results) => {
+            //             if (err) reject(new Error(err.message));
+            //             resolve(results);
+            //         });
+            //     });
+            //     //console.log(response1.affectedRows);
+            //     return { success: true, message: "successfully login" };
+            // } else {
+            //     return { success: false, message: "wrong account or password" };
+            // }
         } catch (error) {
             console.log(error);
             return { success: false, message: "Error occur please try again!!" };
         }
     }
 
-    async updateLoginRecord(info) {
-        try {
-            const response = await new Promise((resolve, reject) => {
-                const query = "UPDATE LoginRecord SET active = 0 WHERE username = ? AND code = ?";
-                connection.query(query, [info.username, info.code], (err, result) => {
-                    if (err) reject(new Error(error.message));
-                    resolve(result);
-                });
-            });
-            //console.log(response);
-            return { success: true, message: "data updated!!" };
-        } catch (error) {
-            console.log(error);
-            return { success: false, message: "Error occur please try again!!" };
-        }
-    }
+    // async updateLoginRecord(info) {
+    //     try {
+    //         const response = await new Promise((resolve, reject) => {
+    //             const query = "UPDATE LoginRecord SET active = 0 WHERE username = ? AND code = ?";
+    //             connection.query(query, [info.username, info.code], (err, result) => {
+    //                 if (err) reject(new Error(error.message));
+    //                 resolve(result);
+    //             });
+    //         });
+    //         //console.log(response);
+    //         return { success: true, message: "data updated!!" };
+    //     } catch (error) {
+    //         console.log(error);
+    //         return { success: false, message: "Error occur please try again!!" };
+    //     }
+    // }
 
     async getLoginByCode(code) {
         try {
