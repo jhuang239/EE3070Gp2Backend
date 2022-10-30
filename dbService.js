@@ -77,7 +77,15 @@ class DbService {
                     "INSERT INTO healthInfo (username, blood_pressure, blood_oxygen, heartbeat, created_time) VALUES(?,?,?,?,?);";
                 connection.query(
                     query,
-                    [info.username, info.bp, info.bo, info.hb, date],
+                    [
+                        info.username,
+                        info.bp_high,
+                        info.bp_low,
+                        info.bo,
+                        info.hb,
+                        info.temperature,
+                        date,
+                    ],
                     (err, result) => {
                         if (err) reject(new Error(err.message));
                         resolve(result);
