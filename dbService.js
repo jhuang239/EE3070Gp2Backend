@@ -81,9 +81,9 @@ class DbService {
                         info.username,
                         info.bp_high,
                         info.bp_low,
+                        info.temperature,
                         info.bo,
                         info.hb,
-                        info.temperature,
                         date,
                     ],
                     (err, result) => {
