@@ -68,32 +68,32 @@ class DbService {
         }
     }
 
-    async uploadBloodPressure(info) {
-        try {
-            const date = new Date();
-            const response = await new Promise((resolve, reject) => {
-                const query =
-                    "INSERT INTO blood_pressure (username, blood_pressure_high, blood_pressure_low, created_time) VALUE(?,?,?,?)";
-                connection.query(
-                    query,
-                    [info.username, info.blood_pressure_high, info.blood_pressure_low, date],
-                    (err, result) => {
-                        if (err) reject(new Error(err.message));
-                        resolve(result);
-                    }
-                );
-            });
-            console.log(response);
-            if (response.affectedRows != undefined && response.affectedRows > 0) {
-                return { success: true, message: "row added" };
-            } else {
-                return { success: false, message: "cannot insert" };
-            }
-        } catch (error) {
-            console.log(error);
-            return { success: false, message: "cannot upload" };
-        }
-    }
+    // async uploadBloodPressure(info) {
+    //     try {
+    //         const date = new Date();
+    //         const response = await new Promise((resolve, reject) => {
+    //             const query =
+    //                 "INSERT INTO blood_pressure (username, blood_pressure_high, blood_pressure_low, created_time) VALUE(?,?,?,?)";
+    //             connection.query(
+    //                 query,
+    //                 [info.username, info.blood_pressure_high, info.blood_pressure_low, date],
+    //                 (err, result) => {
+    //                     if (err) reject(new Error(err.message));
+    //                     resolve(result);
+    //                 }
+    //             );
+    //         });
+    //         console.log(response);
+    //         if (response.affectedRows != undefined && response.affectedRows > 0) {
+    //             return { success: true, message: "row added" };
+    //         } else {
+    //             return { success: false, message: "cannot insert" };
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         return { success: false, message: "cannot upload" };
+    //     }
+    // }
 
     async addhealdata(info) {
         console.log(info);
