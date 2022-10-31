@@ -66,7 +66,16 @@ app.get("/getAll", (request, response) => {
 //insert health data
 app.post("/addHealthData", (request, response) => {
     //console.log(request.body);
-    const info = ({ username, bp_high, bp_low, bo, hb, temperature } = request.body);
+    const info = ({
+        username,
+        blood_pressure_high,
+        blood_pressure_low,
+        temperature,
+        blood_oxygen,
+        heartbeat,
+        room_temperature,
+        humidity,
+    } = request.body);
     //console.log(info);
     const db = DbService.getDbServiceInstance();
     const result = db.addhealdata(info);

@@ -101,16 +101,18 @@ class DbService {
             const date = new Date();
             const response = await new Promise((resolve, reject) => {
                 const query =
-                    "INSERT INTO healthInfo (username, blood_pressure, blood_oxygen, heartbeat, created_time) VALUES(?,?,?,?,?);";
+                    "INSERT INTO healthInfo (username, blood_pressure_high, blood_pressure_low, temperature, blood_oxygen, heartbeat, room_temperature, humidity, created_time) VALUES(?,?,?,?,?,?,?,?,?);";
                 connection.query(
                     query,
                     [
                         info.username,
-                        info.bp_high,
-                        info.bp_low,
+                        info.blood_pressure_high,
+                        info.blood_pressure_low,
                         info.temperature,
-                        info.bo,
-                        info.hb,
+                        info.blood_oxygen,
+                        info.heartbeat,
+                        info.room_temperature,
+                        humidity,
                         date,
                     ],
                     (err, result) => {
