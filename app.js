@@ -23,13 +23,13 @@ app.use(express.urlencoded({ extended: false }));
 // });
 
 //get login record by device code
-app.get("/getLoginByCode", (request, response) => {
-    const code = request.query.code;
-    console.log(code);
-    const db = DbService.getDbServiceInstance();
-    const result = db.getLoginByCode(code);
-    result.then((data) => response.json(data)).catch((err) => console.log(error));
-});
+// app.get("/getLoginByCode", (request, response) => {
+//     const code = request.query.code;
+//     console.log(code);
+//     const db = DbService.getDbServiceInstance();
+//     const result = db.getLoginByCode(code);
+//     result.then((data) => response.json(data)).catch((err) => console.log(error));
+// });
 
 //login
 app.get("/login", (request, response) => {
@@ -45,7 +45,7 @@ app.get("/login", (request, response) => {
 });
 
 //create
-app.post("/insert", (request, response) => {
+app.post("/addAccount", (request, response) => {
     const { username, pwd, device_code } = request.body;
     console.log(username, pwd, device_code);
     const db = DbService.getDbServiceInstance();
@@ -59,7 +59,6 @@ app.post("/insert", (request, response) => {
 //read
 app.get("/getAll", (request, response) => {
     const db = DbService.getDbServiceInstance();
-
     const result = db.getAlldata();
     result.then((data) => response.json(data)).catch((err) => console.log(err));
 });

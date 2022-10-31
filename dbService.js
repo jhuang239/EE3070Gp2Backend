@@ -244,25 +244,25 @@ class DbService {
     //     }
     // }
 
-    async getLoginByCode(code) {
-        try {
-            const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM LoginRecord WHERE code = ? ORDER BY time DESC LIMIT 1";
-                connection.query(query, [code], (err, results) => {
-                    if (err) reject(new Error(err.message));
-                    resolve(results);
-                });
-            });
-            if (response[0].active == 1) {
-                return { success: true, username: response[0].username };
-            } else {
-                return { success: false, message: "no latest active login activity" };
-            }
-        } catch (error) {
-            console.log(error);
-            return { success: false, message: "Error occur please try again!!" };
-        }
-    }
+    // async getLoginByCode(code) {
+    //     try {
+    //         const response = await new Promise((resolve, reject) => {
+    //             const query = "SELECT * FROM LoginRecord WHERE code = ? ORDER BY time DESC LIMIT 1";
+    //             connection.query(query, [code], (err, results) => {
+    //                 if (err) reject(new Error(err.message));
+    //                 resolve(results);
+    //             });
+    //         });
+    //         if (response[0].active == 1) {
+    //             return { success: true, username: response[0].username };
+    //         } else {
+    //             return { success: false, message: "no latest active login activity" };
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         return { success: false, message: "Error occur please try again!!" };
+    //     }
+    // }
 }
 
 module.exports = DbService;
