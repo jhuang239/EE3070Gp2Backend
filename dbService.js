@@ -112,7 +112,7 @@ class DbService {
                         info.blood_oxygen,
                         info.heartbeat,
                         info.room_temperature,
-                        humidity,
+                        info.humidity,
                         date,
                     ],
                     (err, result) => {
