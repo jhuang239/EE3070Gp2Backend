@@ -92,6 +92,14 @@ app.get("/getLatestDataByUser", (request, response) => {
     result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
 
+app.post("/uploadBloodPressure", (request, response) => {
+    const info = ({ username, blood_pressure_high, blood_pressure_low } = request.body);
+    console.log(request.body);
+    const db = DbService.getDbServiceInstance();
+    const result = db.uploadBloodPressure(info);
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
+});
+
 // app.get("/getcode", (request, response) => {
 //     const db = DbService.getDbServiceInstance();
 //     const { code } = request.body;
