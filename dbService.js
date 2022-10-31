@@ -150,11 +150,11 @@ class DbService {
         }
     }
 
-    async createAccount(username, pwd, device_code) {
+    async createAccount(info) {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM devices WHERE code = ?";
-                connection.query(query, [device_code], (err, result) => {
+                connection.query(query, [info.device_code], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);
                 });
@@ -166,10 +166,20 @@ class DbService {
                     const createDate = new Date();
                     const response1 = await new Promise((resolve, reject) => {
                         const query =
-                            "INSERT INTO user (username, password, device_Code, created_time) VALUES(?,?,?,?);";
+                            "INSERT INTO user (username, password, fullname, age, gender, height, weight, device_Code, created_time) VALUES(?,?,?,?,?,?,?,?,?);";
                         connection.query(
                             query,
-                            [username, pwd, device_code, createDate],
+                            [
+                                info.username,
+                                info.pwd,
+                                info.fullname,
+                                info.age,
+                                info.gender,
+                                info.height,
+                                info.weight,
+                                info.device_code,
+                                createDate,
+                            ],
                             (err, result) => {
                                 if (err) reject(new Error(err.message));
                                 resolve(result);

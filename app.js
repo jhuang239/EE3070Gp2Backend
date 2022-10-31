@@ -46,11 +46,12 @@ app.get("/login", (request, response) => {
 
 //create
 app.post("/addAccount", (request, response) => {
-    const { username, pwd, device_code } = request.body;
+    const info = ({ username, fullname, pwd, device_code, age, height, weight, gender } =
+        request.body);
     console.log(username, pwd, device_code);
     const db = DbService.getDbServiceInstance();
 
-    const result = db.createAccount(username, pwd, device_code);
+    const result = db.createAccount(info);
     result;
     result.then((data) => response.json(data)).catch((err) => console.log(err));
     //const {usr_name, pwd, device_code} = request.body;
