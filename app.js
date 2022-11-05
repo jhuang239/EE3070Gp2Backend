@@ -44,7 +44,23 @@ app.get("/login", (request, response) => {
     result.then((data) => response.json(data)).catch((err) => console.log(error));
 });
 
-//create
+//test get ecg json
+app.get("/getECG", (request, response) => {
+    const db = DbService.getDbServiceInstance();
+    const result = db.getECG();
+    result.then((data) => response.json(data)).catch((err) => console.log(error));
+});
+
+//test post ecg json
+app.post("/addECG", (request, response) => {
+    const ecgData = request.body.ecgData;
+    console.log(ecgData);
+    const db = DbService.getDbServiceInstance();
+    const result = db.addECG(ecgData);
+    result.then((data) => response.json(data)).catch((err) => console.log(error));
+});
+
+//create account
 app.post("/addAccount", (request, response) => {
     const info = ({ username, fullname, pwd, device_code, age, height, weight, gender } =
         request.body);
@@ -74,6 +90,7 @@ app.post("/addHealthData", (request, response) => {
         temperature,
         blood_oxygen,
         heartbeat,
+        ecgData,
         room_temperature,
         humidity,
     } = request.body);

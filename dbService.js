@@ -68,40 +68,13 @@ class DbService {
         }
     }
 
-    // async uploadBloodPressure(info) {
-    //     try {
-    //         const date = new Date();
-    //         const response = await new Promise((resolve, reject) => {
-    //             const query =
-    //                 "INSERT INTO blood_pressure (username, blood_pressure_high, blood_pressure_low, created_time) VALUE(?,?,?,?)";
-    //             connection.query(
-    //                 query,
-    //                 [info.username, info.blood_pressure_high, info.blood_pressure_low, date],
-    //                 (err, result) => {
-    //                     if (err) reject(new Error(err.message));
-    //                     resolve(result);
-    //                 }
-    //             );
-    //         });
-    //         console.log(response);
-    //         if (response.affectedRows != undefined && response.affectedRows > 0) {
-    //             return { success: true, message: "row added" };
-    //         } else {
-    //             return { success: false, message: "cannot insert" };
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //         return { success: false, message: "cannot upload" };
-    //     }
-    // }
-
     async addhealdata(info) {
         console.log(info);
         try {
             const date = new Date();
             const response = await new Promise((resolve, reject) => {
                 const query =
-                    "INSERT INTO healthInfo (username, blood_pressure_high, blood_pressure_low, temperature, blood_oxygen, heartbeat, room_temperature, humidity, created_time) VALUES(?,?,?,?,?,?,?,?,?);";
+                    "INSERT INTO healthInfo (username, blood_pressure_high, blood_pressure_low, temperature, blood_oxygen, heartbeat, room_temperature, humidity, created_time) VALUES(?,?,?,?,?,?,?,?,?,?);";
                 connection.query(
                     query,
                     [
@@ -113,6 +86,7 @@ class DbService {
                         info.heartbeat,
                         info.room_temperature,
                         info.humidity,
+                        JSON.stringify(info.ecgData),
                         date,
                     ],
                     (err, result) => {
@@ -127,6 +101,40 @@ class DbService {
             } else {
                 return { success: false, message: "cannot insert" };
             }
+        } catch (error) {
+            console.log(error);
+            return { success: false, message: "error occur" };
+        }
+    }
+
+    async getECG() {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * from ecg;";
+                connection.query(query, (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                });
+            });
+            console.log(JSON.parse(response[0].data));
+            return response[0];
+        } catch (error) {
+            console.log(error);
+            return { success: false, message: "error occur" };
+        }
+    }
+
+    async addECG(ecgData) {
+        try {
+            const data = JSON.stringify(ecgData);
+            const response = await new Promise((resolve, reject) => {
+                const query = "INSERT INTO ecg (data) VALUES (?);";
+                connection.query(query, [data], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                });
+            });
+            console.log(response);
         } catch (error) {
             console.log(error);
             return { success: false, message: "error occur" };
@@ -216,65 +224,11 @@ class DbService {
             } else {
                 return { success: false, message: "wrong account name or password" };
             }
-            // console.log(response[0].username);
-            // if (response[0].username == info.username && response[0].password == info.pwd) {
-            //     const date = new Date();
-            //     const code = response[0].device_Code;
-            //     const response1 = await new Promise((resolve, reject) => {
-            //         const query =
-            //             "INSERT INTO LoginRecord (username, active, code, time) VALUES(?,?,?,?);";
-            //         connection.query(query, [info.username, 1, code, date], (err, results) => {
-            //             if (err) reject(new Error(err.message));
-            //             resolve(results);
-            //         });
-            //     });
-            //     //console.log(response1.affectedRows);
-            //     return { success: true, message: "successfully login" };
-            // } else {
-            //     return { success: false, message: "wrong account or password" };
-            // }
         } catch (error) {
             console.log(error);
             return { success: false, message: "Error occur please try again!!" };
         }
     }
-
-    // async updateLoginRecord(info) {
-    //     try {
-    //         const response = await new Promise((resolve, reject) => {
-    //             const query = "UPDATE LoginRecord SET active = 0 WHERE username = ? AND code = ?";
-    //             connection.query(query, [info.username, info.code], (err, result) => {
-    //                 if (err) reject(new Error(error.message));
-    //                 resolve(result);
-    //             });
-    //         });
-    //         //console.log(response);
-    //         return { success: true, message: "data updated!!" };
-    //     } catch (error) {
-    //         console.log(error);
-    //         return { success: false, message: "Error occur please try again!!" };
-    //     }
-    // }
-
-    // async getLoginByCode(code) {
-    //     try {
-    //         const response = await new Promise((resolve, reject) => {
-    //             const query = "SELECT * FROM LoginRecord WHERE code = ? ORDER BY time DESC LIMIT 1";
-    //             connection.query(query, [code], (err, results) => {
-    //                 if (err) reject(new Error(err.message));
-    //                 resolve(results);
-    //             });
-    //         });
-    //         if (response[0].active == 1) {
-    //             return { success: true, username: response[0].username };
-    //         } else {
-    //             return { success: false, message: "no latest active login activity" };
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //         return { success: false, message: "Error occur please try again!!" };
-    //     }
-    // }
 }
 
 module.exports = DbService;
