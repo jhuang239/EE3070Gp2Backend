@@ -50,7 +50,7 @@ class DbService {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query =
-                    "SELECT * FROM healthInfo where username = ? ORDER BY created_time DESC LIMIT 1";
+                    "SELECT username, blood_pressure_high, blood_pressure_low, temperature, blood_oxygen, heartbeat, room_temperature, humidity, created_time FROM healthInfo where username = ? ORDER BY created_time DESC LIMIT 1";
                 connection.query(query, [username], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);
@@ -74,7 +74,7 @@ class DbService {
             const date = new Date();
             const response = await new Promise((resolve, reject) => {
                 const query =
-                    "INSERT INTO healthInfo (username, blood_pressure_high, blood_pressure_low, temperature, blood_oxygen, heartbeat, room_temperature, humidity, created_time) VALUES(?,?,?,?,?,?,?,?,?,?);";
+                    "INSERT INTO healthInfo (username, blood_pressure_high, blood_pressure_low, temperature, blood_oxygen, heartbeat, room_temperature, humidity, ecg, created_time) VALUES(?,?,?,?,?,?,?,?,?,?);";
                 connection.query(
                     query,
                     [
