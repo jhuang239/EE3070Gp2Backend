@@ -103,7 +103,7 @@ class DbService {
             }
         } catch (error) {
             console.log(error);
-            return { success: false, message: "error occur" };
+            return { success: false, message: error };
         }
     }
 
