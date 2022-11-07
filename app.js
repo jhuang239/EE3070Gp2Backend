@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 // });
 
 //login
-app.get("/login", (request, response) => {
+app.post("/login", (request, response) => {
     const info = ({ username, pwd } = request.body);
     console.log(info);
     // const usr_name = request.query.usr_name;
