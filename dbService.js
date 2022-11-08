@@ -107,40 +107,6 @@ class DbService {
         }
     }
 
-    async getECG() {
-        try {
-            const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * from ecg;";
-                connection.query(query, (err, results) => {
-                    if (err) reject(new Error(err.message));
-                    resolve(results);
-                });
-            });
-            console.log(JSON.parse(response[0].data));
-            return response[0];
-        } catch (error) {
-            console.log(error);
-            return { success: false, message: "error occur" };
-        }
-    }
-
-    async addECG(ecgData) {
-        try {
-            const data = JSON.stringify(ecgData);
-            const response = await new Promise((resolve, reject) => {
-                const query = "INSERT INTO ecg (data) VALUES (?);";
-                connection.query(query, [data], (err, results) => {
-                    if (err) reject(new Error(err.message));
-                    resolve(results);
-                });
-            });
-            console.log(response);
-        } catch (error) {
-            console.log(error);
-            return { success: false, message: "error occur" };
-        }
-    }
-
     async getAlldata() {
         try {
             const response = await new Promise((resolve, reject) => {

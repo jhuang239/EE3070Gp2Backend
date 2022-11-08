@@ -7,56 +7,23 @@ dotenv.config();
 const DbService = require("./dbService");
 const { response } = require("express");
 
-app.use(cors());
+app.use(
+    cors({
+        origin: "*",
+    })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //app.get("/", (req, res) => res.send("Testing"));
 
-//update login record
-// app.post("/updateLoginRecord", (request, response) => {
-//     //console.log(request.body);
-//     const info = ({ username, code } = request.body);
-//     const db = DbService.getDbServiceInstance();
-//     const result = db.updateLoginRecord(info);
-//     result.then((data) => response.json(data)).catch((err) => console.log(error));
-// });
-
-//get login record by device code
-// app.get("/getLoginByCode", (request, response) => {
-//     const code = request.query.code;
-//     console.log(code);
-//     const db = DbService.getDbServiceInstance();
-//     const result = db.getLoginByCode(code);
-//     result.then((data) => response.json(data)).catch((err) => console.log(error));
-// });
-
 //login
 app.post("/login", (request, response) => {
     const info = ({ username, pwd } = request.body);
     console.log(info);
-    // const usr_name = request.query.usr_name;
-    // const pwd = request.query.pwd;
-    // const info = {usr_name, pwd};
 
     const db = DbService.getDbServiceInstance();
     const result = db.Login(info);
-    result.then((data) => response.json(data)).catch((err) => console.log(error));
-});
-
-//test get ecg json
-app.get("/getECG", (request, response) => {
-    const db = DbService.getDbServiceInstance();
-    const result = db.getECG();
-    result.then((data) => response.json(data)).catch((err) => console.log(error));
-});
-
-//test post ecg json
-app.post("/addECG", (request, response) => {
-    const ecgData = request.body.ecgData;
-    console.log(ecgData);
-    const db = DbService.getDbServiceInstance();
-    const result = db.addECG(ecgData);
     result.then((data) => response.json(data)).catch((err) => console.log(error));
 });
 
@@ -117,24 +84,5 @@ app.get("/getLatestDataByUser", (request, response) => {
     const result = db.getLatestHealtData(username);
     result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
-
-// app.post("/uploadBloodPressure", (request, response) => {
-//     const info = ({ username, blood_pressure_high, blood_pressure_low } = request.body);
-//     console.log(request.body);
-//     const db = DbService.getDbServiceInstance();
-//     const result = db.uploadBloodPressure(info);
-//     result.then((data) => response.json(data)).catch((err) => console.log(err));
-// });
-
-// app.get("/getcode", (request, response) => {
-//     const db = DbService.getDbServiceInstance();
-//     const { code } = request.body;
-//     const result = db.isCodeExist(code);
-//     result.then((data) => response.json({ data: data })).catch((err) => console.log(err));
-// });
-
-//update
-
-//delete
 
 app.listen(process.env.PORT, () => console.log("app os running"));
