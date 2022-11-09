@@ -5,7 +5,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const DbService = require("./dbService");
-const { response } = require("express");
 
 app.use(cors());
 app.use(express.json());
@@ -65,8 +64,8 @@ app.post("/addHealthData", (request, response) => {
 
 //get health data by username
 app.get("/getHealthDataByUser", (request, response) => {
-    const { username } = request.body;
-    console.log(username);
+    const { username } = request.query.username;
+    //console.log(username);
     const db = DbService.getDbServiceInstance();
     const result = db.gethealthDataUser(username);
     result.then((data) => response.json(data)).catch((err) => console.log(err));
