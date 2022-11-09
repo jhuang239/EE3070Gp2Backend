@@ -7,7 +7,7 @@ dotenv.config();
 const DbService = require("./dbService");
 const { response } = require("express");
 
-app.use(cors({}));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
