@@ -64,8 +64,9 @@ app.post("/addHealthData", (request, response) => {
 
 //get health data by username
 app.get("/getHealthDataByUser", (request, response) => {
-    const { username } = request.query.username;
-    //console.log(username);
+    console.log(request.query);
+    const username = request.query.username;
+    console.log(username);
     const db = DbService.getDbServiceInstance();
     const result = db.gethealthDataUser(username);
     result.then((data) => response.json(data)).catch((err) => console.log(err));
