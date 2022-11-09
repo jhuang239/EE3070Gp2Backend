@@ -27,7 +27,7 @@ app.post("/login", (request, response) => {
 app.post("/addAccount", (request, response) => {
     const info = ({ username, fullname, pwd, device_code, age, height, weight, gender, email } =
         request.body);
-    console.log(username, pwd, device_code);
+    console.log(info);
     const db = DbService.getDbServiceInstance();
 
     const result = db.createAccount(info);

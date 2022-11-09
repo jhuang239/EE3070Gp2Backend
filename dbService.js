@@ -140,7 +140,7 @@ class DbService {
                     const createDate = new Date();
                     const response1 = await new Promise((resolve, reject) => {
                         const query =
-                            "INSERT INTO user (username, password, fullname, age, gender, height, weight, device_Code, email, created_time) VALUES(?,?,?,?,?,?,?,?,?);";
+                            "INSERT INTO user (username, password, fullname, age, gender, height, weight, device_Code, email, created_time) VALUES(?,?,?,?,?,?,?,?,?,?);";
                         connection.query(
                             query,
                             [
