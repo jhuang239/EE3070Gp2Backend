@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const DbService = require("./dbService");
+const { response } = require("express");
 
 app.use(cors());
 app.use(express.json());
@@ -59,6 +60,30 @@ app.post("/addHealthData", (request, response) => {
     //console.log(info);
     const db = DbService.getDbServiceInstance();
     const result = db.addhealdata(info);
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
+});
+
+//get user info
+app.get("/getUserInfo", (request, response) => {
+    const username = request.query.username;
+    const db = DbService.getDbServiceInstance();
+    const result = db.getUserInfo(username);
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
+});
+
+//get all ecg
+app.get("/getEcgByUser", (request, response) => {
+    const username = request.query.username;
+    const db = DbService.getDbServiceInstance();
+    const result = db.getAllEcg(username);
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
+});
+
+//get latest ecg
+app.get("/getLatestEcgByUser", (request, response) => {
+    const username = request.query.username;
+    const db = DbService.getDbServiceInstance();
+    const result = db.getLatestEcg(username);
     result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
 

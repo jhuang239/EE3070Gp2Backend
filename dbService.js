@@ -23,6 +23,64 @@ class DbService {
         return instance ? instance : new DbService();
     }
 
+    async getUserInfo(username) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM user WHERE username = ?;";
+                connection.query(query, [username], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+        } catch (error) {
+            console.log(error);
+            return { success: false, message: "error occur" };
+        }
+    }
+
+    async getAllEcg(username) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT ecg FROM healthInfo WHERE username = ?;";
+                connection.query(query, [username], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            if (response.length > 0) {
+                console.log(response);
+                return response;
+            } else {
+                return { success: false, message: "no data found" };
+            }
+        } catch (error) {
+            console.log(error);
+            return { success: false, message: "error occur" };
+        }
+    }
+
+    async getLatestEcg(username) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query =
+                    "SELECT ecg FROM healthInfo where username = ? ORDER BY created_time DESC LIMIT 1";
+                connection.query(query, [username], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            if (response.length > 0) {
+                console.log(response);
+                return response;
+            } else {
+                return { success: false, message: "no data found" };
+            }
+        } catch (error) {
+            console.log(error);
+            return { success: false, message: "error occur" };
+        }
+    }
+
     async gethealthDataUser(username) {
         console.log(username);
         try {
@@ -37,11 +95,11 @@ class DbService {
                 console.log(response);
                 return response;
             } else {
-                return { message: "no data found" };
+                return { success: false, message: "no data found" };
             }
         } catch (error) {
             console.log(error);
-            return { message: "error occur" };
+            return { success: false, message: "error occur" };
         }
     }
 
@@ -60,11 +118,11 @@ class DbService {
                 console.log(response);
                 return response[0];
             } else {
-                return { message: "no data found" };
+                return { success: false, message: "no data found" };
             }
         } catch (error) {
             console.log(error);
-            return { message: "error occur" };
+            return { success: false, message: "error occur" };
         }
     }
 
