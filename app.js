@@ -20,7 +20,7 @@ app.post("/login", (request, response) => {
 
     const db = DbService.getDbServiceInstance();
     const result = db.Login(info);
-    result.then((data) => response.json(data)).catch((err) => console.log(error));
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
 
 //create account
