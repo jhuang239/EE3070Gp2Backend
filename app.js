@@ -73,7 +73,7 @@ app.get("/getUserInfo", (request, response) => {
 
 //get device code
 app.get("/getCode", (request, response) => {
-    const username = requset.query.username;
+    const username = request.query.username;
     const db = DbService.getDbServiceInstance();
     const result = db.getCode(username);
     result.then((data) => response.json(data)).catch((err) => console.log(err));
