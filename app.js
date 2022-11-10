@@ -71,6 +71,14 @@ app.get("/getUserInfo", (request, response) => {
     result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
 
+//get device code
+app.get("/getCode", (request, response) => {
+    const username = requset.query.username;
+    const db = DbService.getDbServiceInstance();
+    const result = db.getCode(username);
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
+});
+
 //get all ecg
 app.get("/getEcgByUser", (request, response) => {
     const username = request.query.username;

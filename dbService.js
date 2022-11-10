@@ -81,6 +81,26 @@ class DbService {
         }
     }
 
+    async getCode(username) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT device_Code from user WHERE username = ?";
+                connection.query(query, [username], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            if (response.length > 0) {
+                return response;
+            } else {
+                return { success: false, message: "no data found" };
+            }
+        } catch (error) {
+            console.log(error);
+            return { success: false, message: "error occur" };
+        }
+    }
+
     async gethealthDataUser(username) {
         console.log(username);
         try {
