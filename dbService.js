@@ -84,7 +84,7 @@ class DbService {
     async getCode(username) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT device_Code from user WHERE username = ?";
+                const query = "SELECT device_Code from user WHERE username = ?;";
                 connection.query(query, [username], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);
