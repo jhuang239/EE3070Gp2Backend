@@ -79,7 +79,7 @@ class DbService {
     async getAllEcg(username) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT ecg FROM healthInfo WHERE username = ?;";
+                const query = "SELECT ecg, created_time FROM healthInfo WHERE username = ?;";
                 connection.query(query, [username], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);
