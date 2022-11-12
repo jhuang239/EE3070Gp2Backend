@@ -22,6 +22,14 @@ app.post("/sendMessage", (request, response) => {
     result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
 
+//Dr login
+app.post("/login/dr", (request, response) => {
+    const info = ({ username, pwd } = request.body);
+    const db = DbService.getDbServiceInstance();
+    const result = db.DrLogin(info);
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
+});
+
 //login
 app.post("/login", (request, response) => {
     const info = ({ username, pwd } = request.body);

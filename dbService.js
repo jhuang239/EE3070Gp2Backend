@@ -339,6 +339,27 @@ class DbService {
             return { success: false, message: "Error occur please try again!!" };
         }
     }
+
+    async DrLogin(info) {
+        console.log(info);
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM user_doctor WHERE username = ?";
+                connection.query(query, [info.username, info.pwd], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                });
+            });
+            if (response[0].username == info.username && response[0].password == info.pwd) {
+                return { success: true, message: "login success" };
+            } else {
+                return { success: false, message: "wrong account name or password" };
+            }
+        } catch (error) {
+            console.log(error);
+            return { success: false, message: "Error occur please try again!!" };
+        }
+    }
 }
 
 module.exports = DbService;
