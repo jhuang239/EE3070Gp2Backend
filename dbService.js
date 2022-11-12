@@ -193,18 +193,18 @@ class DbService {
                     "INSERT INTO messages (username, topic, content, seen, created_time) VALUES(?,?,?,?,?);";
                 connection.query(
                     query,
-                    [info.username, info.topic, info.content, 0, date],
+                    [info.username, info.topic, info.content, false, date],
                     (err, result) => {
                         if (err) reject(new Error(err.message));
                         resolve(result);
                     }
                 );
-                if (response.affectedRows != undefined && response.affectedRows > 0) {
-                    return { success: true, message: "row added" };
-                } else {
-                    return { success: false, message: "cannot insert" };
-                }
             });
+            if (response.affectedRows != undefined && response.affectedRows > 0) {
+                return { success: true, message: "row added" };
+            } else {
+                return { success: false, message: "cannot insert" };
+            }
         } catch (error) {
             console.log(error.message);
             return { success: false, message: "error occur" };
