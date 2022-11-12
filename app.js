@@ -13,6 +13,15 @@ app.use(express.urlencoded({ extended: false }));
 
 //app.get("/", (req, res) => res.send("Testing"));
 
+//send message
+app.post("/sendMessage", (request, response) => {
+    const info = ({ username, topic, content } = request.body);
+    console.log(info);
+    const db = DbService.getDbServiceInstance();
+    const result = db.addMessage(info);
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
+});
+
 //login
 app.post("/login", (request, response) => {
     const info = ({ username, pwd } = request.body);
