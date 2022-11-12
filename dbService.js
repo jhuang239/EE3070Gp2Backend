@@ -105,7 +105,8 @@ class DbService {
         console.log(username);
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM healthInfo where username = ?";
+                const query =
+                    "SELECT * FROM healthInfo where username = ? ORDER BY created_time DESC";
                 connection.query(query, [username], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);
@@ -123,28 +124,28 @@ class DbService {
         }
     }
 
-    async getLatestHealtData(username) {
-        console.log(username);
-        try {
-            const response = await new Promise((resolve, reject) => {
-                const query =
-                    "SELECT * FROM healthInfo WHERE username = ? ORDER BY created_time DESC LIMIT 2";
-                connection.query(query, [username], (err, result) => {
-                    if (err) reject(new Error(err.message));
-                    resolve(result);
-                });
-            });
-            if (response.length > 0) {
-                console.log(response);
-                return response[0];
-            } else {
-                return { success: false, message: "no data found" };
-            }
-        } catch (error) {
-            console.log(error);
-            return { success: false, message: "error occur" };
-        }
-    }
+    // async getLatestHealtData(username) {
+    //     console.log(username);
+    //     try {
+    //         const response = await new Promise((resolve, reject) => {
+    //             const query =
+    //                 "SELECT * FROM healthInfo WHERE username = ? ORDER BY created_time DESC LIMIT 2";
+    //             connection.query(query, [username], (err, result) => {
+    //                 if (err) reject(new Error(err.message));
+    //                 resolve(result);
+    //             });
+    //         });
+    //         if (response.length > 0) {
+    //             console.log(response);
+    //             return response[0];
+    //         } else {
+    //             return { success: false, message: "no data found" };
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         return { success: false, message: "error occur" };
+    //     }
+    // }
 
     async addhealdata(info) {
         console.log(info);

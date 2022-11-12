@@ -106,11 +106,11 @@ app.get("/getHealthDataByUser", (request, response) => {
 });
 
 //get latest health data by username
-app.get("/getLatestDataByUser", (request, response) => {
-    const username = request.query.username;
-    const db = DbService.getDbServiceInstance();
-    const result = db.getLatestHealtData(username);
-    result.then((data) => response.json(data)).catch((err) => console.log(err));
-});
+// app.get("/getLatestDataByUser", (request, response) => {
+//     const username = request.query.username;
+//     const db = DbService.getDbServiceInstance();
+//     const result = db.getLatestHealtData(username);
+//     result.then((data) => response.json(data)).catch((err) => console.log(err));
+// });
 
 app.listen(process.env.PORT, () => console.log("app os running"));
