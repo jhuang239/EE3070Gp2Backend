@@ -107,7 +107,6 @@ app.get("/getHealthDataByUser", (request, response) => {
 
 //get latest health data by username
 app.get("/getLatestDataByUser", (request, response) => {
-    console.log(request.body);
     const username = request.query.username;
     const db = DbService.getDbServiceInstance();
     const result = db.getLatestHealtData(username);
