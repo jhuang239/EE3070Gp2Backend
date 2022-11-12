@@ -32,6 +32,7 @@ class DbService {
                     resolve(result);
                 });
             });
+            return response[0];
         } catch (error) {
             console.log(error);
             return { success: false, message: "error occur" };
