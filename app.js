@@ -63,6 +63,15 @@ app.post("/addHealthData", (request, response) => {
     result.then((data) => response.json(data)).catch((err) => console.log(err));
 });
 
+//update user info
+app.post("/updateInfo", (request, response) => {
+    const info = ({ username, fullname, pwd, device_code, age, height, weight, gender, email } =
+        request.body);
+    const db = DbService.getDbServiceInstance();
+    const result = db.updateInfo(info);
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
+});
+
 //get user info
 app.get("/getUserInfo", (request, response) => {
     const username = request.query.username;

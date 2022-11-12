@@ -23,6 +23,30 @@ class DbService {
         return instance ? instance : new DbService();
     }
 
+    async updateInfo(info) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query =
+                    "UPDATE user SET password = ?, email = ?, fullname = ?, age = ?, gender = ?, height = ?, weight = ?, device_Code = ? WHERE username = ?;";
+                connection.query(query, [
+                    info.pwd,
+                    info.email,
+                    info.fullname,
+                    info.age,
+                    info.gender,
+                    info.height,
+                    info.weight,
+                    info.device_code,
+                    info.username,
+                ]);
+            });
+            return response;
+        } catch (error) {
+            console.log(error.message);
+            return { success: false, message: "error occur" };
+        }
+    }
+
     async getUserInfo(username) {
         try {
             const response = await new Promise((resolve, reject) => {
