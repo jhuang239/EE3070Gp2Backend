@@ -28,18 +28,31 @@ class DbService {
             const response = await new Promise((resolve, reject) => {
                 const query =
                     "UPDATE user SET password = ?, email = ?, fullname = ?, age = ?, gender = ?, height = ?, weight = ?, device_Code = ? WHERE username = ?;";
-                connection.query(query, [
-                    info.pwd,
-                    info.email,
-                    info.fullname,
-                    info.age,
-                    info.gender,
-                    info.height,
-                    info.weight,
-                    info.device_code,
-                    info.username,
-                ]);
+                connection.query(
+                    query,
+                    [
+                        info.pwd,
+                        info.email,
+                        info.fullname,
+                        info.age,
+                        info.gender,
+                        info.height,
+                        info.weight,
+                        info.device_code,
+                        info.username,
+                    ],
+                    (err, result) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(result);
+                    }
+                );
             });
+            if (response.affectedRows > 0) {
+                return { success: true, message: "row updated" };
+            } else {
+                return { success: false, message: "can not update" };
+            }
+            console.log(response);
             return response;
         } catch (error) {
             console.log(error.message);
