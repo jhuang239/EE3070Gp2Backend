@@ -253,13 +253,12 @@ class DbService {
     async getAlldata() {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM user;";
+                const query = "SELECT * FROM healthInfo;";
                 connection.query(query, (err, results) => {
                     if (err) reject(new Error(err.message));
                     resolve(results);
                 });
             });
-
             console.log(response);
             return response;
         } catch (error) {
