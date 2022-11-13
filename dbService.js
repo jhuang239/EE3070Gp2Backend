@@ -188,7 +188,7 @@ class DbService {
     async getMessage() {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * from messages;";
+                const query = "SELECT * from messages ORDER BY created_time DESC;";
                 connection.query(query, (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);
