@@ -13,6 +13,21 @@ app.use(express.urlencoded({ extended: false }));
 
 //app.get("/", (req, res) => res.send("Testing"));
 
+//getUser
+app.get("/getUsers", (request, response) => {
+    const db = DbService.getDbServiceInstance();
+    const result = db.getAllUser();
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
+});
+
+//get suggestions
+app.get("/getSuggestions", (request, response) => {
+    const receiver = request.params.receiver;
+    const db = DbService.getDbServiceInstance();
+    const result = db.getSuggestions(receiver);
+    result.then((data) => response.json(data)).catch((err) => console.log(err));
+});
+
 //send suggestions
 app.post("/sendSuggestion", (request, response) => {
     const info = ({ receiver, sender, topic, content } = request.body);

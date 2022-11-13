@@ -52,7 +52,21 @@ class DbService {
             } else {
                 return { success: false, message: "can not update" };
             }
-            console.log(response);
+        } catch (error) {
+            console.log(error.message);
+            return { success: false, message: "error occur" };
+        }
+    }
+
+    async getAllUser() {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM user;";
+                connection.query(query, (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
             return response;
         } catch (error) {
             console.log(error.message);
