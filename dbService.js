@@ -200,6 +200,7 @@ class DbService {
     // }
 
     async getSuggestions(username) {
+        console.log(username);
         try {
             const response = await new Promise((resolve, reject) => {
                 const query =
@@ -209,6 +210,7 @@ class DbService {
                     resolve(result);
                 });
             });
+            console.log(response);
             return response;
         } catch (error) {
             console.log(error);

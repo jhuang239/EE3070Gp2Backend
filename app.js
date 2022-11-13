@@ -22,7 +22,7 @@ app.get("/getUsers", (request, response) => {
 
 //get suggestions
 app.get("/getSuggestions", (request, response) => {
-    const receiver = request.params.receiver;
+    const receiver = request.query.receiver;
     const db = DbService.getDbServiceInstance();
     const result = db.getSuggestions(receiver);
     result.then((data) => response.json(data)).catch((err) => console.log(err));
