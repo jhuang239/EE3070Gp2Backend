@@ -185,6 +185,49 @@ class DbService {
     //     }
     // }
 
+    async getSuggestions(username) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query =
+                    "SELECT * FROM suggestions WHERE receiver = ? ORDER BY created_time DESC;";
+                connection.query(query, [username], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result);
+                });
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+            return { success: false, message: "error occur" };
+        }
+    }
+
+    async sendSuggestion(info) {
+        try {
+            const date = new Date();
+            const response = await new Promise((resolve, reject) => {
+                const query =
+                    "INSERT INTO suggestions (receiver, sender, topic, content, created_time) VALUES (?,?,?,?,?);";
+                connection.query(
+                    query,
+                    [info.receiver, info.sender, info.topic, info.content, date],
+                    (err, result) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(result);
+                    }
+                );
+            });
+            if (response.affectedRows != undefined && response.affectedRows > 0) {
+                return { success: true, message: "row added" };
+            } else {
+                return { success: false, message: "cannot insert" };
+            }
+        } catch (error) {
+            console.log(error.message);
+            return { success: false, message: "error occur" };
+        }
+    }
+
     async getMessage() {
         try {
             const response = await new Promise((resolve, reject) => {
