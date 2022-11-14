@@ -158,7 +158,7 @@ class DbService {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query =
-                    "SELECT * FROM healthInfo where username = ? ORDER BY created_time DESC LIMIT 10";
+                    "SELECT * FROM healthInfo where username = ? ORDER BY created_time DESC;";
                 connection.query(query, [username], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result);
